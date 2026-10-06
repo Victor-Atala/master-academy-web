@@ -74,18 +74,7 @@ export function AppHeader({
           className="topbar-tools-section"
           style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '12px' }}
         >
-          {/* Autocomplete demo button ONLY for instructors on course creation */}
-          {!isDirectorUser && activeView === 'create' && (
-            <Button
-              variant="outline"
-              size="sm"
-              icon={Sparkles}
-              onClick={onFillDemo}
-              title="Autocompletar con datos demo de alta calidad"
-            >
-              Cargar ejemplo
-            </Button>
-          )}
+
 
           {/* Light / Dark Mode Toggle Button */}
           <button
