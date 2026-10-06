@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { UploadCloud, Image as ImageIcon, CheckCircle, HardDrive } from 'lucide-react';
 import { TENANT_CONFIG } from '../../../config/tenantConfig';
 
-export function CoverUploader({ value, onChange, currentStorageMb = 45 }) {
+export function CoverUploader({ value, onChange, currentStorageMb = 0 }) {
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState('');
   const [fileSizeMb, setFileSizeMb] = useState(0);
@@ -15,10 +15,18 @@ export function CoverUploader({ value, onChange, currentStorageMb = 45 }) {
         alert(`La imagen de portada excede el peso máximo permitido (${TENANT_CONFIG.maxCoverSizeMB} MB).`);
         return;
       }
-      const previewUrl = URL.createObjectURL(file);
       setFileName(file.name);
       setFileSizeMb(sizeInMb);
-      onChange(previewUrl);
+
+      // Convierte la imagen seleccionada a Base64 Data URL para guardado y vista previa permanente
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const base64Url = evt.target?.result;
+        if (base64Url && onChange) {
+          onChange(base64Url, sizeInMb, file.name);
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
 

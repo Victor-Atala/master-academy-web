@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Paperclip, Plus, Trash2, FileText, ExternalLink, Download, FileSpreadsheet, FileArchive, FileCode } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Paperclip, Plus, Trash2, FileText, UploadCloud, FileSpreadsheet, FileArchive } from 'lucide-react';
 import { Button } from '../atoms/Button';
 
 export function LessonResourcesManager({
@@ -11,6 +11,7 @@ export function LessonResourcesManager({
   const [fileUrl, setFileUrl] = useState('');
   const [type, setType] = useState('pdf');
   const [customMb, setCustomMb] = useState('');
+  const fileInputRef = useRef(null);
 
   const defaultSizes = {
     pdf: 14.5,
@@ -20,8 +21,43 @@ export function LessonResourcesManager({
     link: 0.1,
   };
 
-  const handleAdd = (e) => {
-    e.preventDefault();
+  const handleFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const sizeMb = Number((file.size / (1024 * 1024)).toFixed(1)) || 1.0;
+    const fileName = file.name;
+    const ext = fileName.split('.').pop()?.toLowerCase() || '';
+
+    let detectedType = 'pdf';
+    if (['xls', 'xlsx', 'csv'].includes(ext)) detectedType = 'excel';
+    else if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) detectedType = 'zip';
+    else if (['doc', 'docx'].includes(ext)) detectedType = 'doc';
+    else if (['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(ext)) detectedType = 'video';
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const dataUrl = evt.target?.result || URL.createObjectURL(file);
+      const newResource = {
+        id: 'res_' + Date.now(),
+        name: fileName,
+        fileUrl: dataUrl,
+        type: detectedType,
+        sizeMb,
+      };
+
+      if (onAddResource) {
+        onAddResource(newResource);
+      }
+    };
+    reader.readAsDataURL(file);
+
+    // Reset input
+    if (e.target) e.target.value = '';
+  };
+
+  const handleAddManual = (e) => {
+    if (e) e.preventDefault();
     if (!name.trim() || !fileUrl.trim()) return;
 
     const sizeMb = Number(customMb) > 0 ? Number(customMb) : (defaultSizes[type] || 12.0);
@@ -59,19 +95,44 @@ export function LessonResourcesManager({
         gap: '10px',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Paperclip size={15} color="var(--color-primary)" />
           <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-main)' }}>
-            Material de ayuda visual y recursos para esta clase ({resources.length})
+            Material de ayuda visual y recursos adjuntos ({resources.length})
           </span>
         </div>
         <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>
-          PDF, Excel, guías (máx. 500 MB en total por curso)
+          PDF, Excel, guías, paquetes ZIP (máx. 500 MB en total por curso)
         </span>
       </div>
 
-      {/* Formulario rápido para añadir recurso */}
+      {/* Selector directo de archivos desde la computadora */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        onChange={handleFileUpload}
+        accept=".pdf,.xlsx,.xls,.doc,.docx,.zip,.rar,.png,.jpg,.jpeg,.mp4"
+        style={{ display: 'none' }}
+      />
+
+      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
+        <Button
+          type="button"
+          variant="primarySubtle"
+          size="sm"
+          icon={UploadCloud}
+          onClick={() => fileInputRef.current?.click()}
+          style={{ fontWeight: 700 }}
+        >
+          Adjuntar archivo desde tu equipo (PDF, Excel, ZIP)
+        </Button>
+        <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
+          o ingresa un enlace web / URL externa a continuación:
+        </span>
+      </div>
+
+      {/* Formulario rápido para añadir por URL o enlace */}
       <div
         style={{
           display: 'grid',
@@ -97,8 +158,8 @@ export function LessonResourcesManager({
         />
 
         <input
-          type="url"
-          placeholder="URL o enlace del archivo"
+          type="text"
+          placeholder="URL o enlace (ej. https://.../archivo.pdf)"
           value={fileUrl}
           onChange={(e) => setFileUrl(e.target.value)}
           style={{
@@ -158,10 +219,10 @@ export function LessonResourcesManager({
           size="sm"
           variant="secondary"
           icon={Plus}
-          onClick={handleAdd}
+          onClick={handleAddManual}
           disabled={!name.trim() || !fileUrl.trim()}
         >
-          Adjuntar
+          Adjuntar URL
         </Button>
       </div>
 
@@ -169,7 +230,7 @@ export function LessonResourcesManager({
       {resources.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '4px' }}>
           {resources.map((res) => {
-            const sizeLabel = res.sizeMb ? (res.sizeMb + ' MB') : (defaultSizes[res.type] + ' MB');
+            const sizeLabel = res.sizeMb ? (res.sizeMb + ' MB') : ((defaultSizes[res.type] || 10) + ' MB');
             return (
               <div
                 key={res.id}

@@ -65,7 +65,12 @@ export function GeneralInfoSection({
         <FormField label="Imagen de portada" hint="Recomendado: formato 16:9 de alta resolución.">
           <CoverUploader
             value={portada_path}
-            onChange={(url) => onUpdate('portada_path', url)}
+            onChange={(url, sizeMb) => {
+              onUpdate('portada_path', url);
+              if (sizeMb) {
+                onUpdate('portada_file_size_mb', sizeMb);
+              }
+            }}
           />
         </FormField>
       </div>
