@@ -36,18 +36,28 @@ export function CreateCoursePage({
     closeSuccessModal,
   } = formState;
 
-  // Cálculo dinámico del almacenamiento de ayuda visual (PDF, Excel, guías) con límite de 500 MB
+  // Cálculo dinámico del almacenamiento de ayuda visual (PDF, Excel, guías, portadas) en tiempo real con límite de 500 MB
   const totalVisualAidMb = useMemo(() => {
     let sum = 0;
+
+    // Peso de la imagen de portada si se cargó un archivo personalizado
+    if (formData.portada_file_size_mb) {
+      sum += Number(formData.portada_file_size_mb) || 0;
+    } else if (formData.portada_path && formData.portada_path.startsWith('data:')) {
+      sum += Number((formData.portada_path.length / (1024 * 1024)).toFixed(2));
+    }
+
+    // Peso acumulado de recursos adjuntos en lecciones (PDF, Excel, Zip, etc.)
     (formData.modulos || []).forEach(m => {
       (m.lecciones || []).forEach(l => {
         (l.resources || l.recursos || []).forEach(r => {
-          sum += Number(r.sizeMb) || (r.type === 'excel' ? 8.2 : r.type === 'zip' ? 42.0 : r.type === 'doc' ? 6.5 : 14.5);
+          sum += Number(r.sizeMb || r.size_mb) || (r.type === 'excel' ? 8.2 : r.type === 'zip' ? 42.0 : r.type === 'doc' ? 6.5 : 14.5);
         });
       });
     });
-    return sum > 0 ? Number(sum.toFixed(1)) : 65.4;
-  }, [formData.modulos]);
+
+    return Number(sum.toFixed(1));
+  }, [formData.modulos, formData.portada_path, formData.portada_file_size_mb]);
 
   return (
     <div className="animate-fade-in">

@@ -266,19 +266,6 @@ export function CertificatesPage({
             Generación criptográfica de folios oficiales (<code>CERT-YYYYMMDD-XXXXXXXX</code>), identificador UUID v4 y código QR para validación pública y escaneo móvil.
           </p>
         </div>
-
-        <Button
-          variant="primary"
-          icon={Plus}
-          onClick={openIssueModal}
-          style={{
-            boxShadow: '0 4px 14px rgba(30, 64, 175, 0.35)',
-            fontWeight: 700,
-            padding: '10px 20px',
-          }}
-        >
-          Emitir Certificado Oficial
-        </Button>
       </div>
 
       {/* Mini Stat Cards Row */}
@@ -622,7 +609,7 @@ export function CertificatesPage({
       {/* ========================================================================= */}
       {/* MODAL 1: EMISIÓN DE CERTIFICADO OFICIAL (SINCRONIZADO CON BACKEND LARAVEL) */}
       {/* ========================================================================= */}
-      <ModalPortal isOpen={isIssueModalOpen}>
+      <ModalPortal isOpen={false}>
         <div
           className="modal-overlay-backdrop"
           onClick={(e) => {
@@ -1024,20 +1011,6 @@ export function CertificatesPage({
                   >
                     {copiedId === 'modal_copy' ? '¡Enlace Copiado!' : 'Copiar URL QR'}
                   </Button>
-
-                  <a
-                    href={
-                      previewCert.qr_code_url ||
-                      'http://127.0.0.1:8000/api/v1/certificates/verify/' + (previewCert.uuid || previewCert.verification_uuid)
-                    }
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <Button variant="secondary" size="sm" icon={ExternalLink}>
-                      Verificar en API
-                    </Button>
-                  </a>
 
 
 

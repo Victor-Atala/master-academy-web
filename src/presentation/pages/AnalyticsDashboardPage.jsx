@@ -67,24 +67,64 @@ export function AnalyticsDashboardPage({
 
   // Desglose de Ventas por Curso del Instructor
   const courseSalesBreakdown = [
-    { title: 'Especialidad en Ciberseguridad Defensiva y Análisis Forense', sales: 142, revenue: 70858, commission: 42514.8 },
-    { title: 'Gestión Financiera y Rentabilidad para PyMEs', sales: 98, revenue: 48902, commission: 29341.2 },
-    { title: 'Desarrollo Web Fullstack & Ciberseguridad', sales: 84, revenue: 41916, commission: 25149.6 },
-    { title: 'Primeros Auxilios y Brigadas de Emergencia', sales: 78, revenue: 27222, commission: 16333.2 },
-    { title: 'Normativas Oficiales de Seguridad Industrial (STPS)', sales: 80, revenue: 39920, commission: 23952.0 },
-  ];
-
-  // Historial de liquidaciones recibidas con comprobantes subidos por la Dirección
-  const settlementHistory = INITIAL_SETTLEMENT_HISTORY || [
     {
-      id: 'DISP-2026-Q3-01',
-      date: '2026-09-15',
-      instructorName: 'Víctor Atala Lagunas',
-      amount: 42514.8,
-      status: 'LIQUIDADO',
-      bank: 'BBVA México',
-      clabe: '012180001234567890',
-      receiptFileName: 'comprobante_spei_sep2026_q1.pdf',
+      title: 'Especialidad en Ciberseguridad Defensiva y Análisis Forense',
+      sales: 142,
+      revenue: 70858,
+      commission: 42514.8,
+      status: 'Pagado',
+      receipt: {
+        id: 'DISP-2026-Q3-01',
+        date: '2026-09-15',
+        amount: 42514.8,
+        bank: 'BBVA México',
+        clabe: '012180001234567890',
+        receiptFileName: 'comprobante_spei_ciberseguridad_sep2026.pdf',
+      },
+    },
+    {
+      title: 'Gestión Financiera y Rentabilidad para PyMEs',
+      sales: 98,
+      revenue: 48902,
+      commission: 29341.2,
+      status: 'Pagado',
+      receipt: {
+        id: 'DISP-2026-Q3-02',
+        date: '2026-09-20',
+        amount: 29341.2,
+        bank: 'BBVA México',
+        clabe: '012180001234567890',
+        receiptFileName: 'comprobante_spei_gestion_pymes_sep2026.pdf',
+      },
+    },
+    {
+      title: 'Desarrollo Web Fullstack & Ciberseguridad',
+      sales: 84,
+      revenue: 41916,
+      commission: 25149.6,
+      status: 'Pendiente',
+    },
+    {
+      title: 'Primeros Auxilios y Brigadas de Emergencia',
+      sales: 78,
+      revenue: 27222,
+      commission: 16333.2,
+      status: 'Pagado',
+      receipt: {
+        id: 'DISP-2026-Q3-03',
+        date: '2026-09-28',
+        amount: 16333.2,
+        bank: 'BBVA México',
+        clabe: '012180001234567890',
+        receiptFileName: 'comprobante_spei_primeros_auxilios.pdf',
+      },
+    },
+    {
+      title: 'Normativas Oficiales de Seguridad Industrial (STPS)',
+      sales: 80,
+      revenue: 39920,
+      commission: 23952.0,
+      status: 'Pendiente',
     },
   ];
 
@@ -248,9 +288,27 @@ export function AnalyticsDashboardPage({
                     </span>
                   </td>
                   <td>
-                    <span className="badge-pill badge-teal" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                      <CheckCircle2 size={12} /> En Acumulación
-                    </span>
+                    {item.status === 'Pagado' ? (
+                      <Button
+                        variant="outline"
+                        size="xs"
+                        icon={Receipt}
+                        onClick={() => setSelectedReceipt(item.receipt)}
+                        title="Ver comprobante de pago subido por la directiva"
+                        style={{
+                          borderColor: 'var(--color-success)',
+                          color: 'var(--color-success)',
+                          background: 'var(--color-success-light)',
+                          fontWeight: 700,
+                        }}
+                      >
+                        Pagado (Ver Recibo)
+                      </Button>
+                    ) : (
+                      <span className="badge-pill badge-warning" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        ● Pendiente
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -259,155 +317,57 @@ export function AnalyticsDashboardPage({
         </div>
       </div>
 
-      {/* Historial de Liquidaciones Recibidas & Comprobantes SPEI */}
+      {/* Section: Inscripciones Recientes de Alumnos (Horizontal Completa) */}
       <div className="admin-card">
         <div className="admin-card-header">
           <div className="admin-card-title">
-            <Receipt size={18} color="var(--color-primary)" />
-            <span>Historial de Liquidaciones Recibidas y Comprobantes SPEI</span>
+            <ShoppingBag size={18} color="var(--color-primary)" />
+            <span>Inscripciones Recientes de Alumnos</span>
           </div>
-          <span style={{ fontSize: '0.76rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
-            Emitidos por Dirección General
+          <span style={{ fontSize: '0.76rem', color: 'var(--color-text-muted)' }}>
+            Sincronizadas en tiempo real con App Móvil
           </span>
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
+        <div className="admin-table-container">
           <table className="admin-table">
             <thead>
               <tr>
-                <th>Folio Dispersión</th>
-                <th>Fecha de Pago</th>
-                <th>Monto Depositado</th>
-                <th>Banco & Cuenta</th>
-                <th>Comprobante de Evidencia SPEI</th>
+                <th>Orden</th>
+                <th>Estudiante</th>
+                <th>Curso</th>
+                <th>Monto</th>
+                <th>Pago</th>
+                <th>Fecha</th>
               </tr>
             </thead>
             <tbody>
-              {settlementHistory.map((s) => (
-                <tr key={s.id}>
-                  <td style={{ fontFamily: 'monospace', fontWeight: 700, color: 'var(--color-primary)' }}>
-                    {s.id}
+              {recentOrders.map((ord) => (
+                <tr key={ord.id}>
+                  <td style={{ fontFamily: 'monospace', fontWeight: 600, color: 'var(--color-text-muted)' }}>
+                    {ord.id}
                   </td>
-                  <td style={{ color: 'var(--color-text-main)', fontWeight: 600 }}>
-                    {s.date}
+                  <td style={{ fontWeight: 700, color: 'var(--color-text-main)' }}>
+                    {ord.studentName}
+                  </td>
+                  <td style={{ color: 'var(--color-secondary)', fontWeight: 600 }}>
+                    {ord.courseTitle}
+                  </td>
+                  <td style={{ fontWeight: 800, color: 'var(--color-primary)' }}>
+                    ${ord.amount}
                   </td>
                   <td>
-                    <span style={{ fontWeight: 800, color: 'var(--color-success)', fontSize: '0.92rem' }}>
-                      ${s.amount.toLocaleString('es-MX', { minimumFractionDigits: 2 })} MXN
+                    <span className="badge-pill badge-gray">
+                      <CreditCard size={11} /> {ord.paymentMethod}
                     </span>
                   </td>
-                  <td>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-text-main)' }}>
-                      {s.bank}
-                    </div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', fontFamily: 'monospace' }}>
-                      CLABE: {s.clabe}
-                    </div>
-                  </td>
-                  <td>
-                    <Button
-                      variant="outline"
-                      size="xs"
-                      icon={Download}
-                      onClick={() => setSelectedReceipt(s)}
-                      title="Ver y descargar comprobante oficial emitido por la dirección"
-                    >
-                      Ver Comprobante
-                    </Button>
+                  <td style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem' }}>
+                    {ord.date}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
-      </div>
-
-      {/* Grid: Ventas Recientes & Dudas Pendientes */}
-      <div className="responsive-split-grid">
-        <div className="admin-card">
-          <div className="admin-card-header">
-            <div className="admin-card-title">
-              <ShoppingBag size={18} color="var(--color-primary)" />
-              <span>Inscripciones Recientes de Alumnos</span>
-            </div>
-            <span style={{ fontSize: '0.76rem', color: 'var(--color-text-muted)' }}>
-              Sincronizadas con App Móvil
-            </span>
-          </div>
-
-          <div className="admin-table-container">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Orden</th>
-                  <th>Estudiante</th>
-                  <th>Curso</th>
-                  <th>Monto</th>
-                  <th>Pago</th>
-                  <th>Fecha</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentOrders.map((ord) => (
-                  <tr key={ord.id}>
-                    <td style={{ fontFamily: 'monospace', fontWeight: 600, color: 'var(--color-text-muted)' }}>
-                      {ord.id}
-                    </td>
-                    <td style={{ fontWeight: 700, color: 'var(--color-text-main)' }}>
-                      {ord.studentName}
-                    </td>
-                    <td style={{ color: 'var(--color-secondary)', fontWeight: 600 }}>
-                      {ord.courseTitle}
-                    </td>
-                    <td style={{ fontWeight: 800, color: 'var(--color-primary)' }}>
-                      ${ord.amount}
-                    </td>
-                    <td>
-                      <span className="badge-pill badge-gray">
-                        <CreditCard size={11} /> {ord.paymentMethod}
-                      </span>
-                    </td>
-                    <td style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem' }}>
-                      {ord.date}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Quick Highlights / Status Card */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <div
-            className="dashboard-highlight-card"
-            style={{
-              background: 'var(--color-card-bg)',
-              color: 'var(--color-text-main)',
-              borderRadius: '12px',
-              padding: '1.4rem',
-              border: '1px solid var(--color-light-border)',
-              boxShadow: 'var(--shadow-xs)',
-              position: 'relative',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <MessageSquareQuote size={20} color="var(--color-primary)" />
-              <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Atención a Alumnos</h4>
-            </div>
-            <p style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', lineHeight: 1.5, margin: '0 0 16px 0' }}>
-              Tienes <strong>{pendingInquiriesCount} consultas pendientes</strong> de responder en tus lecciones y bandeja privada.
-            </p>
-            <Button
-              variant="primary"
-              size="sm"
-              icon={MessageSquareQuote}
-              onClick={() => onNavigate('inquiries')}
-              title="Ir al panel de consultas"
-            >
-              Responder Consultas Ahora
-            </Button>
-          </div>
         </div>
       </div>
 

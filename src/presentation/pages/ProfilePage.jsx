@@ -59,13 +59,19 @@ export function ProfilePage({
   const handleSignatureUpload = (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setDigitalSignatureUrl(url);
-      try {
-        localStorage.setItem('ma_instructor_digital_signature', url);
-      } catch (err) {}
-      setSignatureSaved(true);
-      setTimeout(() => setSignatureSaved(false), 3000);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Url = event.target?.result;
+        if (base64Url) {
+          setDigitalSignatureUrl(base64Url);
+          try {
+            localStorage.setItem('ma_instructor_digital_signature', base64Url);
+          } catch (err) {}
+          setSignatureSaved(true);
+          setTimeout(() => setSignatureSaved(false), 3000);
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
 

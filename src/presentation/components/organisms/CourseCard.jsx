@@ -184,16 +184,6 @@ export function CourseCard({
             </Button>
 
             <Button
-              variant="warning"
-              size="sm"
-              icon={ClipboardCheck}
-              onClick={() => onViewExams && onViewExams(course)}
-              title="Gestión de Exámenes de este curso"
-            >
-              Gestión de Exámenes
-            </Button>
-
-            <Button
               variant="dangerSubtle"
               size="sm"
               icon={Trash2}

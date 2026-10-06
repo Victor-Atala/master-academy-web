@@ -124,11 +124,9 @@ export function Sidebar({
       <div
         className="sidebar-brand-wrapper"
         onClick={(e) => {
-          if (isCollapsed && onToggleSidebar) {
-            e.stopPropagation();
+          e.stopPropagation();
+          if (onToggleSidebar) {
             onToggleSidebar();
-          } else if (onTabChange) {
-            onTabChange(isDirectorUser ? 'executive' : 'analytics');
           }
         }}
         style={{
@@ -140,7 +138,7 @@ export function Sidebar({
           flexDirection: isCollapsed ? 'column' : 'row',
           gap: isCollapsed ? '10px' : '12px',
         }}
-        title={isCollapsed ? "Hacer clic para expandir el menú lateral" : "Master Academy"}
+        title="Clic para abrir o cerrar el menú lateral"
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div
