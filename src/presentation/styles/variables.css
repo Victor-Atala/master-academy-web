@@ -1,0 +1,159 @@
+:root, [data-theme="light"] {
+  /* Brand Palette - Master Academy Corporate Tokens (Light Theme Limpio y Sobrio) */
+  --color-light-bg: #F8FAFC;         /* Gris pizarra ultra tenue */
+  --color-light-surface: #FFFFFF;    /* Blanco sólido para tarjetas */
+  --color-light-card: #FFFFFF;
+  --color-card-bg: #FFFFFF;
+  --color-modal-card-bg: #FFFFFF;
+  --color-modal-header-bg: #F8FAFC;
+  --color-modal-module-header: #F1F5F9;
+  --color-modal-module-border: #E2E8F0;
+  --color-sidebar-bg: #FFFFFF;
+  --color-topbar-bg: rgba(255, 255, 255, 0.96);
+  --color-light-border: #E2E8F0;     /* Gris sutil */
+  --color-border-hover: #CBD5E1;
+
+  --color-primary: #1E40AF;         /* Azul marino profundo corporativo */
+  --color-primary-hover: #1E3A8A;
+  --color-primary-light: #EFF6FF;
+  --color-primary-glow: rgba(30, 64, 175, 0.12);
+
+  --color-secondary: #475569;       /* Gris medio balanceado */
+  --color-secondary-hover: #334155;
+  --color-secondary-light: #F1F5F9;
+  --color-secondary-glow: rgba(71, 85, 105, 0.12);
+
+  --color-warning: #B45309;         /* Mostaza oscuro/ámbar */
+  --color-warning-hover: #92400E;
+  --color-warning-light: #FFFBEB;
+
+  --color-accent: #1E40AF;
+  --color-accent-light: #EFF6FF;
+
+  --color-input-bg: #FFFFFF;
+  --color-input-bg-focus: #FFFFFF;
+  --color-input-border: #E2E8F0;
+  --color-input-border-hover: #CBD5E1;
+  --color-input-border-focus: #1E40AF;
+
+  --color-text-main: #0F172A;        /* Azul carbón muy oscuro */
+  --color-text-dark: #020617;
+  --color-text-label: #1E293B;
+  --color-text-muted: #64748B;       /* Gris medio */
+  --color-text-light: #94A3B8;
+  --color-text-inverse: #FFFFFF;
+
+  --color-badge-bg: #FEF3C7;         /* Crema suave */
+  --color-badge-text: #92400E;       /* Marrón ámbar legible */
+
+  --color-badge-gray-bg: #F1F5F9;
+  --color-badge-gray-text: #475569;
+
+  --color-table-header-bg: #F1F5F9;
+  --color-table-row-hover: #F8FAFC;
+  --color-table-row-border: #E2E8F0;
+
+  --color-danger: #DC2626;
+  --color-danger-light: #FEF2F2;
+  --color-danger-hover: #B91C1C;
+
+  --color-success: #059669;          /* Verde bosque corporativo */
+  --color-success-light: #ECFDF5;
+
+  --color-info: #1D4ED8;             /* Azul cobalto */
+  --color-info-light: #EFF6FF;
+
+  /* Typography Fonts */
+  --font-family-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Elevation Shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.1);
+  --shadow-xl: 0 20px 35px rgba(15, 23, 42, 0.12);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-full: 9999px;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] {
+  /* Brand Palette - Master Academy Corporate Tokens (Dark Theme Corporativo Mate) */
+  --color-light-bg: #11161B;         /* Gris petróleo oscuro mate */
+  --color-light-surface: #1A222A;    /* Fondo tarjetas */
+  --color-light-card: #1A222A;
+  --color-card-bg: #1A222A;
+  --color-modal-card-bg: #1A222A;
+  --color-modal-header-bg: #11161B;
+  --color-modal-module-header: #222D38;
+  --color-modal-module-border: #2A3542;
+  --color-sidebar-bg: #141B22;       /* Fondo sidebar */
+  --color-topbar-bg: rgba(20, 27, 34, 0.96);
+  --color-light-border: #2A3542;     /* Bordes neutros */
+  --color-border-hover: #3A4756;
+
+  --color-primary: #2563EB;         /* Azul zafiro sólido */
+  --color-primary-hover: #1D4ED8;
+  --color-primary-light: rgba(37, 99, 235, 0.14);
+  --color-primary-glow: rgba(37, 99, 235, 0.18);
+
+  --color-secondary: #94A3B8;       /* Gris neutro apagado */
+  --color-secondary-hover: #CBD5E1;
+  --color-secondary-light: #222D38;
+  --color-secondary-glow: rgba(148, 163, 184, 0.14);
+
+  --color-warning: #D97706;         /* Ámbar sobrio */
+  --color-warning-hover: #B45309;
+  --color-warning-light: rgba(217, 119, 6, 0.14);
+
+  --color-accent: #2563EB;
+  --color-accent-light: rgba(37, 99, 235, 0.14);
+
+  --color-input-bg: #11161B;
+  --color-input-bg-focus: #1A222A;
+  --color-input-border: #2A3542;
+  --color-input-border-hover: #3A4756;
+  --color-input-border-focus: #2563EB;
+
+  --color-text-main: #F1F5F9;        /* Blanco hueso suave */
+  --color-text-dark: #FFFFFF;
+  --color-text-label: #E2E8F0;
+  --color-text-muted: #94A3B8;       /* Gris neutro apagado */
+  --color-text-light: #64748B;
+  --color-text-inverse: #11161B;
+
+  --color-badge-bg: #332E1D;         /* Fondo badge ámbar */
+  --color-badge-text: #FACC15;       /* Amarillo tenue no reflectante */
+
+  --color-badge-gray-bg: #222D38;
+  --color-badge-gray-text: #94A3B8;
+
+  --color-table-header-bg: #141B22;
+  --color-table-row-hover: #222D38;
+  --color-table-row-border: #2A3542;
+
+  --color-danger: #EF4444;
+  --color-danger-light: rgba(239, 68, 68, 0.14);
+  --color-danger-hover: #DC2626;
+
+  --color-success: #10B981;          /* Verde esmeralda apagado */
+  --color-success-light: rgba(16, 185, 129, 0.14);
+
+  --color-info: #38BDF8;             /* Cian neutro contenido */
+  --color-info-light: rgba(56, 189, 248, 0.14);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.4);
+}

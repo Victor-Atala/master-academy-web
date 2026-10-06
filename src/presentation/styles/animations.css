@@ -1,0 +1,118 @@
+/* ==========================================================================
+   CORPORATE EXECUTIVE ANIMATION & INTERACTION SYSTEM
+   Clean transitions, elegant elevation shadows, and professional entrances
+   ========================================================================== */
+
+:root {
+  --spring-bounce: cubic-bezier(0.16, 1, 0.3, 1);
+  --spring-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   KEYFRAME ANIMATIONS
+   ========================================================================== */
+
+/* Section Switching Entrance */
+@keyframes executiveSectionEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle Soft Pulses */
+@keyframes softPulseCorporate {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(30, 64, 175, 0.12);
+  }
+  50% {
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.22);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   INTERACTIVE BUTTON & CARD BEHAVIORS
+   ========================================================================== */
+
+.admin-btn,
+button.admin-btn,
+.theme-toggle-btn,
+.sidebar-nav-item,
+.action-icon-btn {
+  transition: all 180ms ease-in-out !important;
+  position: relative;
+}
+
+/* Buttons subtle lift on hover */
+.admin-btn:hover:not(:disabled) {
+  transform: translateY(-1px) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.admin-btn:active:not(:disabled) {
+  transform: translateY(0) !important;
+}
+
+/* Sidebar Navigation Items */
+.sidebar-nav-item:hover {
+  transform: translateX(3px) !important;
+  background: var(--color-primary-light) !important;
+  color: var(--color-primary) !important;
+}
+
+.sidebar-nav-item:hover .sidebar-item-icon {
+  color: var(--color-primary) !important;
+}
+
+.sidebar-nav-item.active {
+  box-shadow: inset 3px 0 0 var(--color-primary) !important;
+}
+
+/* Dashboard Metric Cards */
+.dashboard-stat-card {
+  transition: all 200ms ease-in-out !important;
+  position: relative;
+  cursor: pointer;
+}
+
+.dashboard-stat-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Course cards */
+.course-card-item {
+  transition: all 200ms ease-in-out !important;
+}
+
+.course-card-item:hover {
+  transform: translateY(-3px) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Mini stat cards */
+.mini-stat-card {
+  transition: all 200ms ease-in-out !important;
+}
+
+.mini-stat-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* Section Container Animation Class */
+.maximalist-section-enter,
+.animate-fade-in {
+  animation: executiveSectionEnter 250ms ease-out;
+}
