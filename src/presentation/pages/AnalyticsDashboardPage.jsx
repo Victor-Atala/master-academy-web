@@ -16,6 +16,7 @@ import {
   ExternalLink,
   BookOpen,
   PieChart,
+  HelpCircle,
 } from 'lucide-react';
 import { Button } from '../components/atoms/Button';
 import { ModalPortal } from '../components/atoms/ModalPortal';
